@@ -1,10 +1,12 @@
 body{
     font-family:'Times New Roman', Times, serif
 }
+
 .navbar{
     height: 50px;
     display: block;
 }
+
 .color-white{
     color: white;
 }
@@ -45,6 +47,7 @@ body{
 #inner-middle{
     flex: 3;
 }
+
 #inner-right{
     flex: 1;
 }
@@ -85,6 +88,7 @@ body{
     border-radius: 5px;
     transition: 0.3s;
 }
+
 .inner-left-img:hover{
     opacity: 0.7;
 }

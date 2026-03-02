@@ -6,21 +6,23 @@
     <title>Registration Page</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
-<body>
-    <h2>This is registration page</h2>
+<body class="reg-log-body">
     <form method="post" action="http://localhost:3000/register">
         <div class="reg-div">
-            <label for="name">Full Name</label><br>
-            <input type="text" id="name" name="name" placeholder="Enter Your Full Name"><br>
-            <label for="username">Username</label><br>
-            <input type="text" id="username" name="username" placeholder="Enter Your Username"><br>
-            <label for="password">Password</label><br>
-            <input type="password" id="password" name="password" placeholder="Enter Password"><br>
-            <label for="password">Confirm Password</label><br>
-            <input type="password" id="password" name="password" placeholder="Enter Password"><br>
-            <label for="email">Email</label><br>
-            <input type="email" id="email" name="email" placeholder="Enter Your Email"><br>
-            <button type="submit">Register</button>
+            <h2>Complete Your Registration</h2>
+            <label for="name" class="reg-div-label">Full Name</label><br>
+            <input type="text" id="name" name="name" placeholder="Enter Your Full Name" class="reg-div-inp"><br>
+            <label for="username" class="reg-div-label">Username</label><br>
+            <input type="text" id="username" name="username" placeholder="Enter Your Username" class="reg-div-inp"><br>
+            <label for="password" class="reg-div-label">Password</label><br>
+            <input type="password" id="password" name="password" placeholder="Enter Password" class="reg-div-inp"><br>
+            <label for="password" class="reg-div-label">Confirm Password</label><br>
+            <input type="password" id="password" name="password" placeholder="Enter Password" class="reg-div-inp"><br>
+            <label for="email" class="reg-div-label">Email</label><br>
+            <input type="email" id="email" name="email" placeholder="Enter Your Email" class="reg-div-inp"><br>
+            <button type="submit" class="btn-class">Register</button>
+            <h3>Already have an account?</h3>
+            <a href="http://localhost:3000/login"><button type="button" class="btn-class">Login</button></a>
         </div>
     </form>
 </body>

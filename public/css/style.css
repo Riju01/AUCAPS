@@ -102,7 +102,60 @@ body{
 }
 
 .info-li{
-    /* border: 1px solid black; */
     margin: 2px;
     background-color: aliceblue;
+}
+
+
+/* Registration Page CSS */
+.reg-div{
+    /* border: 1px solid #002147; */
+    background-color: #FFFFFF;
+    margin: 10px auto;
+    padding: 20px;
+    color: black;
+    border-radius: 10px;
+    box-shadow: 2px 2px 4px #002147;
+}
+
+/* Registration/Login Page Body */
+.reg-log-body{
+    background-color: #F4F6F9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family:'Times New Roman', Times, serif;
+}
+
+.reg-div-inp{
+    margin: 5px;
+    padding: 2px;
+    border: 2px solid #002147;
+    border-radius: 5px;
+    height: 20px;
+    width: 90%;
+}
+
+.reg-div-label{
+    font-weight: bold;
+}
+
+/* Button Class Changes */
+
+.btn-class{
+    text-decoration: none;
+    background-color: rgb(0, 55, 255);
+    color: white;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 10px;
+    width: 50%;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-class:hover{
+    background-color: white;
+    color: black;
 }

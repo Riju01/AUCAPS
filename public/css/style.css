@@ -39,14 +39,14 @@ body{
 }
 
 #inner-left{
-    width: 20%;
+    flex: 1;
 }
 
 #inner-middle{
-    width: 55%;
+    flex: 3;
 }
 #inner-right{
-    width: 20%;
+    flex: 1;
 }
 
 

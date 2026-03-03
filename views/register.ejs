@@ -6,24 +6,35 @@
     <title>Registration Page</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
-<body class="reg-log-body">
-    <form method="post" action="http://localhost:3000/register">
-        <div class="reg-div">
-            <h2>Complete Your Registration</h2>
-            <label for="name" class="reg-div-label">Full Name</label><br>
-            <input type="text" id="name" name="name" placeholder="Enter Your Full Name" class="reg-div-inp"><br>
-            <label for="username" class="reg-div-label">Username</label><br>
-            <input type="text" id="username" name="username" placeholder="Enter Your Username" class="reg-div-inp"><br>
-            <label for="password" class="reg-div-label">Password</label><br>
-            <input type="password" id="password" name="password" placeholder="Enter Password" class="reg-div-inp"><br>
-            <label for="password" class="reg-div-label">Confirm Password</label><br>
-            <input type="password" id="password" name="password" placeholder="Enter Password" class="reg-div-inp"><br>
-            <label for="email" class="reg-div-label">Email</label><br>
-            <input type="email" id="email" name="email" placeholder="Enter Your Email" class="reg-div-inp"><br>
-            <button type="submit" class="btn-class">Register</button>
-            <h3>Already have an account?</h3>
-            <a href="http://localhost:3000/login"><button type="button" class="btn-class">Login Here</button></a>
-        </div>
-    </form>
+<body>
+    <div class="reg-log-wrapper">
+        <form method="post" action="http://localhost:3000/register">
+            <div class="reg-div">
+                <h2>Complete Your Registration</h2>
+                <label for="name" class="reg-div-label">Full Name</label><br>
+                <input type="text" id="name" name="name" placeholder="Enter Your Full Name" class="reg-div-inp"><br>
+                <label for="username" class="reg-div-label">Username</label><br>
+                <input type="text" id="username" name="username" placeholder="Enter Your Username" class="reg-div-inp"><br>
+                <label for="password" class="reg-div-label">Password</label><br>
+                <input type="password" id="password" name="password" placeholder="Enter Password" class="reg-div-inp"><br>
+                <label for="password" class="reg-div-label">Confirm Password</label>&nbsp;<small id="message"></small><br>
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Enter Password" class="reg-div-inp"><br>
+                
+                <label for="email" class="reg-div-label">Email</label><br>
+                <input type="email" id="email" name="email" placeholder="Enter Your Email" class="reg-div-inp"><br>
+                <label for="accType"><b>Account Type</b></label><br>
+                <select id="accType" name="accType" required>
+                    <option value="">Select Account Type</option>
+                    <option value="1"> Register as Admin</option>
+                    <option value="2"> Register as Student</option>
+                    <option value="3"> Register as Company</option>
+                </select><br>
+                <button type="submit" class="btn-class">Register</button>
+                <h3>Already have an account?</h3>
+                <a href="http://localhost:3000/login"><button type="button" class="btn-class">Login Here</button></a>
+            </div>
+        </form>
+    </div>
+    <script src="/js/script.js"></script>
 </body>
 </html>

@@ -119,13 +119,14 @@ body{
 }
 
 /* Registration/Login Page Body */
-.reg-log-body{
+.reg-log-wrapper{
     background-color: #F4F6F9;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     font-family:'Times New Roman', Times, serif;
+    border-radius: 5px;
 }
 
 .reg-div-inp{
@@ -158,5 +159,16 @@ body{
 
 .btn-class:hover{
     background-color: white;
+    color: black;
+}
+
+/* Reg. Dropdown Box */
+#accType{
+    margin: 5px;
+    padding: 2px;
+    border: 2px solid #002147;
+    border-radius: 5px;
+    height: 26px;
+    width: 93%;
     color: black;
 }

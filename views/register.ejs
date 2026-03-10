@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="reg-log-wrapper">
-        <form method="post" action="http://localhost:3000/register">
+        <form method="POST" action="http://localhost:3000/register">
             <div class="reg-div">
                 <h2>Complete Your Registration</h2>
                 <% if (typeof error !== 'undefined') { %>
@@ -16,8 +16,6 @@
                 <% } %>
                 <label for="name" class="reg-div-label">Full Name</label><br>
                 <input type="text" id="name" name="name" placeholder="Enter Your Full Name" class="reg-div-inp" required><br>
-                <label for="username" class="reg-div-label">Username</label><br>
-                <input type="text" id="username" name="username" placeholder="Enter Your Username" class="reg-div-inp" required><br>
                 <label for="password" class="reg-div-label">Password</label><br>
                 <input type="password" id="password" name="password" placeholder="Enter Password" class="reg-div-inp" required><br>
                 <label for="password" class="reg-div-label">Confirm Password</label>&nbsp;<small id="message" required></small><br>
@@ -27,9 +25,9 @@
                 <label for="accType"><b>Account Type</b></label><br>
                 <select id="accType" name="accType" required>
                     <option value="">Select Account Type</option>
-                    <option value="1"> Register as Admin</option>
-                    <option value="2"> Register as Student</option>
-                    <option value="3"> Register as Company</option>
+                    <option value="admin"> Register as Admin</option>
+                    <option value="student"> Register as Student</option>
+                    <option value="company"> Register as Company</option>
                 </select><br>
                 <button type="submit" class="btn-class">Register</button>
                 <h3>Already have an account?</h3>

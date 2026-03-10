@@ -4,8 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <h2>This is the login page</h2>
+    <div class="reg-log-wrapper">
+        <form method="post" action="http://localhost:3000/login">
+            <div class="reg-div">
+                <h2>Enter credentials to Login</h2>
+                <label for="email" class="reg-div-label">Email</label><br>
+                <input type="email" id="email" name="email" placeholder="Enter Your Email" class="reg-div-inp" required><br>
+                <label for="password" class="reg-div-label">Password</label><br>
+                <input type="password" id="password" name="password" placeholder="Enter Password" class="reg-div-inp" required><br>
+                <label for="accType"><b>Account Type</b></label><br>
+                <select id="accType" name="accType" required>
+                    <option value="">Select Account Type</option>
+                    <option value="admin"> Login as Admin</option>
+                    <option value="student"> Login as Student</option>
+                    <option value="company"> Login as Company</option>
+                </select><br>
+                <button type="submit" class="btn-class">Login</button>
+                <h3>Don't have an account?</h3>
+                <a href="http://localhost:3000/register"><button type="button" class="btn-class">Register Here</button></a>
+            </div>
+        </form>
+    </div>
 </body>
 </html>

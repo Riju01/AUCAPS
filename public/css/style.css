@@ -5,6 +5,7 @@ body{
 .navbar{
     height: 50px;
     display: block;
+    background-color: #002147;
 }
 
 .color-white{

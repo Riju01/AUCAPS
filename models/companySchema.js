@@ -7,7 +7,10 @@ const companySchema = new Schema({
         required:true
     },
 
-    description:String,
+    description:{
+        type:String,
+        default:"Welcome to our company"
+    },
 
     profile:{
         filename:{
@@ -25,21 +28,20 @@ const companySchema = new Schema({
         unique:true
     },
 
-    type:String,
-
-    cgpa:{
-        type:Number,
-        min:0,
-        max:10
+    type:{
+        type:String,
+        default:"N/A"
     },
-
 
     password:{
         type:String,
         required:true
     },
 
-    address:String,
+    address:{
+        type:String,
+        default:"N/A"
+    },
 
     country:String,
 

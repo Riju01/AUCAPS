@@ -4,13 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Dashboard</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <h2>This is Company Dashboard of @<i><%= dbUser.name %></i> </h2>
-    <h3>Your details are below:</h3>
-    <h3>Name: <%= dbUser.name %></h3>
-    <h3>Email: <%= dbUser.email %></h3>
-    <h3>Type: <%= dbUser.accType %></h3>
-    <h3>Id: <%= dbUser._id %></h3>
+    <div class="dash-main">
+        <div class="dash-outer-left">
+            <div class="dash-left-nav">
+                <h2>Dashboard</h2>
+            </div>
+            <div class="img-container">
+                <img src="/images/compLogo.png" class="dash-img">
+            </div>
+            <div class="profileDetails">
+                <span><h3><%= dbUser.name %></h3></span>
+                <%= dbUser.description %><br><br>
+                Type: <%= dbUser.type %><br>
+                Address: <%= dbUser.address %>
+            </div>
+            <div class="dash-inner-left">
+                <a href="http://localhost:3000/company/<%= dbUser.id %>/edit" id="dashProfileId"><button id="dashProfile">Company Management</button></a>
+            </div>
+        </div>
+        <div class="dash-outer-right">
+            <div class="dash-right-nav">
+                <button type="button" class="a-btn-class" data-type="jobs">Create Jobs</button>
+                <button type="button" class="a-btn-class" data-type="applications">Applications</button>
+                <button type="button" class="a-btn-class" data-type="postedJobs">Jobs You Posted</button>
+                <button type="button" class="a-btn-class" data-type="notifications">Notifications</button>
+                <button type="button" class="a-btn-class" data-type="notices">Admin Notices</button>
+            </div>
+            <div class="dash-inner-right" id="content-area">
+                <h3 style="color: black;">Timeline posts are here</h3>
+            </div>
+        </div>
+    </div>
+    <script src="/js/companyDash.js"></script>
 </body>
 </html>

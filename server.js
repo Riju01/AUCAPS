@@ -5,11 +5,11 @@ const port = 3000;
 const methodOverride=require("method-override");
 const mongoose=require("mongoose");
 const mongo_url="mongodb://127.0.0.1:27017/AUCAPS";
-
+const session = require("express-session");
 const Student=require("./models/studentSchema.js");
 const Company=require("./models/companySchema.js");
 const Admin=require("./models/adminSchema.js");
-
+const Job=require("./models/jobSchema.js");
 
 main().then(()=>{
     console.log("Connected to DB");
@@ -26,6 +26,12 @@ async function main(params) {
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(session({
+    secret: "your-secret-key",
+    resave: false,
+    saveUninitialized: false
+}));
+
 
 // View Engine Setup
 app.set("view engine", "ejs");
@@ -40,7 +46,7 @@ app.get("/",(req,res)=>{
 
 //Register Page
 app.get("/register",(req,res)=>{
-    res.render("register.ejs")
+    res.render("landPage/register.ejs")
 })
 
 app.post("/register", async (req,res)=>{
@@ -74,7 +80,7 @@ app.post("/register", async (req,res)=>{
 
 //Login Page
 app.get("/login",(req,res)=>{
-    res.render("login.ejs")
+    res.render("landPage/login.ejs")
 })
 app.post("/login", async (req,res)=>{
     let logUser = req.body;
@@ -112,23 +118,107 @@ app.post("/login", async (req,res)=>{
     }
 });
 
-app.get("/:accType/:id",async (req,res)=>{
-    let info=req.params;
+//Redirecting to Dashboard
+app.get("/:accType/:id", async (req, res) => {
+    if(!mongoose.Types.ObjectId.isValid(req.params.id)){
+        return res.render("error/pageNotFound.ejs");
+    }
+    let info = req.params;
     let dbUser;
-    if(info.accType==="student"){
+    if(info.accType === "student"){
         dbUser = await Student.findById(info.id);
+        if(!dbUser){
+            return res.render("error/pageNotFound.ejs");
+        }
         res.render("dashboard/studentDash.ejs",{dbUser});
     }
-    else if(info.accType==="admin"){
+    else if(info.accType === "admin"){
         dbUser = await Admin.findById(info.id);
+        if(!dbUser){
+            return res.send("error/pageNotFound.ejs");
+        }
         res.render("dashboard/adminDash.ejs",{dbUser});
     }
-    else if(info.accType==="company"){
+    else if(info.accType === "company"){
         dbUser = await Company.findById(info.id);
+        if(!dbUser){
+            return res.send("error/pageNotFound.ejs");
+        }
         res.render("dashboard/companyDash.ejs",{dbUser});
     }
     else{
-        res.send("Page does not exist.");
+        res.send("error/pageNotFound.ejs");
+    }
+});
+
+//Redirecting to Services 
+app.get("/services",(req,res)=>{
+    res.render("landPage/services.ejs");
+})
+//Redirecting to Details
+app.get("/details",(req,res)=>{
+    res.render("landPage/details.ejs");
+})
+
+//Edit Student Profile
+app.get("/student/:id/edit",async(req,res)=>{
+    const student = await Student.findById(req.params.id);
+    res.render("dashEdit/editStudent.ejs",{dbUser:student});
+})
+app.post("/student/:id/edit", async (req, res) => {
+    try {
+        const updatedStudent = await Student.findByIdAndUpdate(
+            req.params.id,
+            req.body,              
+            { new: true }   
+        );
+        res.redirect(`/student/${req.params.id}`);
+    } catch (err) {
+        console.log(err);
+        res.send("Error updating student");
+    }
+});
+
+
+
+//Edit Company Profile
+app.get("/company/:id/edit",async(req,res)=>{
+    const company = await Company.findById(req.params.id);
+    res.render("dashEdit/editCompany.ejs",{dbUser:company});
+})
+app.post("/company/:id/edit", async (req, res) => {
+    try {
+        const updatedCompany = await Company.findByIdAndUpdate(
+            req.params.id,
+            req.body,              
+            { new: true }   
+        );
+        res.redirect(`/company/${req.params.id}`);
+    } catch (err) {
+        console.log(err);
+        res.send("Error updating company");
+    }
+});
+
+
+//Job Creation
+app.get("/company/:id/data/:type",async(req,res)=>{
+    const type=req.params.type;
+    const company = await Company.findById(req.params.id);
+    if(type === "jobs"){
+        return res.render("companyNav/createJob.ejs",{dbUser:company});
+    }
+    if(type === "applications"){
+        return res.render("companyNav/application.ejs",{dbUser:company})
+    }
+    if(type === "postedJobs"){
+        return res.render("companyNav/postedJob.ejs",{dbUser:company})
+    }
+    if(type === "notifications"){
+        return res.render("companyNav/notification.ejs",{dbUser:company})
+    }
+    if(type === "notices"){
+        return res.render("companyNav/notice.ejs",{dbUser:company})
     }
 })
 

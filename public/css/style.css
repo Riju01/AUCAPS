@@ -83,14 +83,15 @@ body{
     align-items: center; 
 }
 
-.inner-left-img{
+.inner-left-img,.inner-right-img {
     width: 100%;
     margin-top: 5px;
     border-radius: 5px;
     transition: 0.3s;
+    height: 100px;
 }
 
-.inner-left-img:hover{
+.inner-left-img:hover {
     opacity: 0.7;
 }
 
@@ -109,28 +110,29 @@ body{
 
 
 /* Registration Page CSS */
-.reg-div{
-    /* border: 1px solid #002147; */
-    background-color: #FFFFFF;
+.reg-div,.edit-div{
+    border: 1px solid #002147;
+    background-color: white;
+    width: 350px;
     margin: 10px auto;
     padding: 20px;
-    color: black;
+    color:#002147;
     border-radius: 10px;
     box-shadow: 2px 2px 4px #002147;
 }
 
 /* Registration/Login Page Body */
-.reg-log-wrapper{
-    background-color: #F4F6F9;
+.reg-log-wrapper, .edit-log-wrapper{
+    /* background-color: #F4F6F9; */
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    font-family:'Times New Roman', Times, serif;
+    font-family:Georgia, 'Times New Roman', Times, serif;
     border-radius: 5px;
 }
 
-.reg-div-inp{
+.reg-div-inp, .edit-div-inp{
     margin: 5px;
     padding: 2px;
     border: 2px solid #002147;
@@ -140,7 +142,7 @@ body{
     color: black;
 }
 
-.reg-div-label{
+.reg-div-label,.edit-div-label{
     font-weight: bold;
 }
 
@@ -156,6 +158,7 @@ body{
     width: 50%;
     font-weight: bold;
     transition: .5s;
+    text-decoration: none;
 }
 
 .btn-class:hover{
@@ -163,8 +166,8 @@ body{
     color: black;
 }
 
-/* Reg. Dropdown Box */
-#accType{
+/* Dropdown Box */
+#accType,#department,#type{
     margin: 5px;
     padding: 2px;
     border: 2px solid #002147;
@@ -172,4 +175,172 @@ body{
     height: 26px;
     width: 93%;
     color: black;
+}
+
+/* Background Image */
+.background-image {
+    background:
+        linear-gradient(rgba(255,255,255,0.75), rgba(255,255,255,0.75)),
+        url("/images/au_ingate.png");
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+}
+
+/* Error Handling */
+.error-div{
+    border: 1px solid black;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    height: 8vh;
+    width: 400px;
+    padding: 50px;
+    margin: 0px auto;
+    border-radius: 10px;
+    box-shadow: 2px 2px 4px red;
+    background-color: white;
+}
+
+
+
+/* Dashboard Designing */
+
+.dash-main{
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.profileDetails{
+    padding: 10px;
+    font-weight: bold;
+}
+.profileDetails > span {
+    display: block;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.dash-outer-left{
+    flex: 1;
+    min-width: 250px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.dash-outer-right{
+    flex: 2;
+    min-width: 300px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    color: white;
+    overflow: hidden;
+}
+
+.dash-inner-left{
+    background-color: #f5f7fa;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#dashProfile{
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #002147;
+    border-radius: 10px;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    transition: 0.3s ease;
+    font-weight: bold;
+}
+#dashProfile:hover{
+    background-color:#002147;
+    color: white;
+    transform: translateX(4px);
+}
+
+.dash-left-nav,
+.dash-right-nav{
+    height: 40px;
+    display: flex;
+    align-items: center;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.dash-left-nav{
+    background-color: #002147;
+    color: white;
+}
+
+@media (max-width: 768px){
+    .dash-main{
+        flex-direction: column;
+    }
+}
+
+
+.dash-img{
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+    border: 1px solid black;
+    margin-top: 2px;
+}
+.img-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+.dash-right-nav>a{
+    text-decoration: none;
+    height: 100%;
+    width: 20%;
+}
+.a-btn-class{
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    color: #002147;
+    font-weight: bold;
+    border-radius: 10px;
+    transition-duration: 0.3s;
+    text-decoration: none;
+}
+.a-btn-class:hover{
+    background-color: #002147;
+    color: white;
+}
+.jobTextarea{
+    height: 50px;
+}
+
+/* Button Click Effect */
+.dash-right-nav>.a-btn-class.active{
+    background-color: #002147;
+    color: white;
+    border: 2px solid #002147;
+}
+.dash-right-nav>.a-btn-class:hover {
+    background-color: #002147;
+    color: white;
+}
+.dash-right-nav>.a-btn-class.active {
+    background-color: #002147;
+    color: white;
+}
+
+.test-h2-class{
+    color: #002147;
 }

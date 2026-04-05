@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Your Company</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="background-image">
+    <div class="edit-log-wrapper">
+        <form method="POST" action="http://localhost:3000/company/<%= dbUser.id %>/edit">
+            <div class="edit-div">
+                <h2>Edit Your Company Details</h2>
+                <% if (typeof error !== 'undefined') { %>
+                <p style="color:red;"><%= error %></p>
+                <% } %>
+                <label for="name" class="edit-div-label">Company Name</label><br>
+                <input type="text" id="name" name="name" placeholder="Enter Your Company Name" class="edit-div-inp" value="<%= dbUser.name %>" required><br>
+                <label for="description" class="edit-div-label">Short Description</label><br>
+                <input type="text" id="description" name="description" placeholder="Enter Short Description" class="edit-div-inp" value="<%= dbUser.description %>"><br>
+                <label for="address" class="edit-div-label">Current Address</label><br>
+                <input type="text" id="address" name="address" placeholder="Enter Your Current Address" class="edit-div-inp" value="<%= dbUser.address %>"><br>
+                <label for="type" class="edit-div-label">Company Type</label><br>
+                <select id="type" name="type">
+                    <option value="">Select Account Type</option>
+                    <option value="chemical"> Chemicals </option>
+                    <option value="it"> IT </option>
+                    <option value="consultancy"> Consultancy</option>
+                    <option value="other"> Others </option>
+                </select><br>
+            
+                <button type="submit" class="btn-class">Edit</button>
+                <h3>Don't want to edit?</h3>
+                <a href="http://localhost:3000/company/<%= dbUser.id %>"><button type="button" class="btn-class">Go Back</button></a>
+            </div>
+        </form>
+    </div>
+    <script src="/js/script.js"></script>
+</body>
+</html>

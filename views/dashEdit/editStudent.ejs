@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Your Profile</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="background-image">
+    <div class="edit-log-wrapper">
+        <form method="POST" action="http://localhost:3000/student/<%= dbUser.id %>/edit">
+            <div class="edit-div">
+                <h2>Edit Your Profile</h2>
+                <% if (typeof error !== 'undefined') { %>
+                <p style="color:red;"><%= error %></p>
+                <% } %>
+                <label for="name" class="edit-div-label">Full Name</label><br>
+                <input type="text" id="name" name="name" placeholder="Enter Your Full Name" class="edit-div-inp" value="<%= dbUser.name %>" required><br>
+                <label for="registration" class="edit-div-label">Registration</label><br>
+                <input type="number" id="registration" name="registration" placeholder="Enter Your Registration Number" class="edit-div-inp" value="<%= dbUser.registration %>"><br>
+                <label for="cgpa" class="edit-div-label">CGPA</label><br>
+                <input type="number" id="cgpa" name="cgpa" placeholder="Enter Your CGPA" class="edit-div-inp" value="<%= dbUser.cgpa %>" min="0" max="10" step="0.01"><br>
+                <label for="address" class="edit-div-label">Current Address</label><br>
+                <input type="text" id="address" name="address" placeholder="Enter Your Current Address" class="edit-div-inp" value="<%= dbUser.address %>"><br>
+                <label for="department" class="edit-div-label">Department</label><br>
+                <select id="department" name="department">
+                    <option value="">Select Account Type</option>
+                    <option value="cse"> Computer Science & Engineering(CSE) </option>
+                    <option value="it"> Information Technology(IT) </option>
+                    <option value="ece"> Electronics & Communication Engineering(ECE)</option>
+                    <option value="arch"> Architecture </option>
+                    <option value="civil"> Civil Engineering(Civil) </option>
+                    <option value="me"> Mechanical Engineering(ME) </option>
+                    <option value="ce"> Chemical Engineering(CE) </option>
+                    <option value="geo"> Geo Engineering(GEO) </option>
+                </select><br>
+                
+                <button type="submit" class="btn-class">Edit</button>
+                <h3>Don't want to edit?</h3>
+                <a href="http://localhost:3000/student/<%= dbUser.id %>"><button type="button" class="btn-class">Go Back</button></a>
+            </div>
+        </form>
+    </div>
+    <script src="/js/script.js"></script>
+</body>
+</html>

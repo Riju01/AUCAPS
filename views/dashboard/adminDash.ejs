@@ -3,14 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Dashboard</title>
+    <title>Admin Page</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <h2>This is Admin Dashboard of @<i><%= dbUser.name %></i> </h2>
-    <h3>Your details are below:</h3>
-    <h3>Name: <%= dbUser.name %></h3>
-    <h3>Email: <%= dbUser.email %></h3>
-    <h3>Type: <%= dbUser.accType %></h3>
-    <h3>Id: <%= dbUser._id %></h3>
+    <div class="dash-main">
+        <div class="dash-outer-left">
+            <div class="dash-left-nav">
+                <h2>Dashboard</h2>
+            </div>
+            <div class="img-container">
+                <img src="/images/man.png" class="dash-img">
+            </div>
+            <div class="profileDetails">
+                <span><h3><%= dbUser.name %></h3></span>
+                <h3>@Andhra University Placement Cell</h3>
+            </div>
+            <div class="dash-inner-left">
+                <a href="http://localhost:3000/admin/<%= dbUser.id %>/edit" id="dashProfileId"><button id="dashProfile">Admin Profile</button></a>
+            </div>
+        </div>
+        <div class="dash-outer-right">
+            <div class="dash-right-nav">
+                <a href="#"><button type="button" class="a-btn-class">Company Lists</button></a>
+                <a href="#"><button type="button" class="a-btn-class">Student Lists</button></a>
+                <a href="#"><button type="button" class="a-btn-class">Job Lists</button></a>
+                <a href="#"><button type="button" class="a-btn-class">Verify Accounts</button></a>
+                <a href="#"><button type="button" class="a-btn-class">Notice Board</button></a>
+            </div>
+            <div class="dash-inner-right">
+                <h3 style="color: black;">Timeline posts are here</h3>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

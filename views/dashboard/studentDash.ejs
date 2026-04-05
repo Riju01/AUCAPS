@@ -4,13 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Dashboard</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <h2>This is Student Dashboard of @<i><%= dbUser.name %></i> </h2>
-    <h3>Your details are below:</h3>
-    <h3>Name: <%= dbUser.name %></h3>
-    <h3>Email: <%= dbUser.email %></h3>
-    <h3>Type: <%= dbUser.accType %></h3>
-    <h3>Id: <%= dbUser._id %></h3>
+    <div class="dash-main">
+        <div class="dash-outer-left">
+            <div class="dash-left-nav">
+                <h2>Dashboard</h2>
+            </div>
+            <div class="img-container">
+                <img src="/images/man.png" class="dash-img">
+            </div>
+            <div class="profileDetails">
+                <span><h3><%= dbUser.name %></h3></span>
+                Registration: <%= dbUser.registration %><br>
+                Cgpa: <%= dbUser.cgpa %><br>
+                Department: <%= dbUser.department %><br>
+                Address: <%= dbUser.address %>
+            </div>
+            <div class="dash-inner-left">
+                <a href="http://localhost:3000/student/<%= dbUser.id %>/edit" id="dashProfileId"><button id="dashProfile">Profile Management</button></a>
+            </div>
+        </div>
+        <div class="dash-outer-right">
+            <div class="dash-right-nav">
+                <a href="/student/<%= dbUser.id %>/news"><button type="button" class="a-btn-class">News Feed</button></a>
+                <a href="/jobs"><button type="button" class="a-btn-class">Job Openings</button></a>
+                <a href="/companies"><button type="button" class="a-btn-class">Check Companies</button></a>
+                <a href="/student/<%= dbUser.id %>/notifications"><button type="button" class="a-btn-class">Notifications</button></a>
+                <a href="/student/<%= dbUser.id %>/applications"><button type="button" class="a-btn-class">Jobs Applied</button></a>
+            </div>
+            <div class="dash-inner-right">
+                <h3 style="color: black;">Timeline posts are here</h3>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

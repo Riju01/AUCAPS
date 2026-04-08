@@ -211,7 +211,11 @@ body{
     gap: 10px;
     flex-wrap: wrap;
 }
-
+.dash-head1{
+    display: flex;
+    flex: content;
+    justify-content: center;
+}
 .profileDetails{
     padding: 10px;
     font-weight: bold;
@@ -225,6 +229,7 @@ body{
 .dash-outer-left{
     flex: 1;
     min-width: 250px;
+    height: 400px;
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
@@ -264,7 +269,6 @@ body{
 #dashProfile:hover{
     background-color:#002147;
     color: white;
-    transform: translateX(4px);
 }
 
 .dash-left-nav,
@@ -295,6 +299,7 @@ body{
     border: 1px solid black;
     margin-top: 2px;
 }
+
 .img-container{
     display: flex;
     justify-content: center;
@@ -302,11 +307,11 @@ body{
 }
 
 
-
 .dash-right-nav>a{
     text-decoration: none;
     height: 100%;
     width: 20%;
+
 }
 .a-btn-class{
     height: 100%;
@@ -317,6 +322,7 @@ body{
     border-radius: 10px;
     transition-duration: 0.3s;
     text-decoration: none;
+    margin: 5px;
 }
 .a-btn-class:hover{
     background-color: #002147;
@@ -327,20 +333,94 @@ body{
 }
 
 /* Button Click Effect */
-.dash-right-nav>.a-btn-class.active{
+.dash-right-nav > .a-btn-class,
+.job-detail > .a-btn-class {
+    background-color: white;
+    color: #002147;
+    border: 2px solid #002147;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dash-right-nav > .a-btn-class:hover,
+.job-detail > .a-btn-class:hover {
+    background-color: #002147;
+    color: white;
+}
+.dash-right-nav > .a-btn-class.active {
     background-color: #002147;
     color: white;
     border: 2px solid #002147;
 }
-.dash-right-nav>.a-btn-class:hover {
-    background-color: #002147;
-    color: white;
-}
-.dash-right-nav>.a-btn-class.active {
-    background-color: #002147;
-    color: white;
-}
 
 .test-h2-class{
     color: #002147;
+    margin: 10px;
+
+}
+
+/* Job Templates */
+.job-template {
+    display: flex;
+    flex-wrap: wrap;   /* allows wrapping */
+    gap: 10px;
+    margin: 10px;
+}
+.individual-template {
+    flex: 1 1 30%; 
+    min-width: 150px;
+    max-width: 250px;
+    border: 1px solid blue;
+    color: #002147;
+    border-radius: 10px;
+    box-shadow: 2px 2px 4px grey;
+    padding: 10px;
+    transition: all 0.3s ease;
+    background-color: white;
+}
+.individual-template:hover {
+    box-shadow: 0 0 16px rgb(37, 37, 36);
+    transform: translateY(-3px); 
+}
+
+
+/* See Job Details */
+.job-detail {
+    color: #002147;
+    margin: 15px;
+    padding: 15px;
+    border: 1px solid #002147;
+    border-radius: 10px;
+    background-color: #f9fbff;
+}
+
+/* Table cells */
+.job-detail table th,
+.job-detail table td {
+    border: 1px solid #002147;
+    padding: 10px;
+    text-align: left;
+    border-radius: 5px;
+}
+.job-detail table tr:nth-child(even) {
+    background-color: #eef3ff;
+}
+.job-detail table th {
+    background-color: #002147;
+    color: white;
+}
+.job-detail {
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column; 
+    gap: 10px;              
+}
+#editJobBtn{
+    width: 25%;
+}
+
+.a-btn-class.applied-btn {
+    background-color: gray !important;
+    cursor: not-allowed;
 }

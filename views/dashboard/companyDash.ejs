@@ -10,7 +10,7 @@
     <div class="dash-main">
         <div class="dash-outer-left">
             <div class="dash-left-nav">
-                <h2>Dashboard</h2>
+                <h2 class="dash-head1">Dashboard</h2>
             </div>
             <div class="img-container">
                 <img src="/images/compLogo.png" class="dash-img">
@@ -22,14 +22,14 @@
                 Address: <%= dbUser.address %>
             </div>
             <div class="dash-inner-left">
-                <a href="http://localhost:3000/company/<%= dbUser.id %>/edit" id="dashProfileId"><button id="dashProfile">Company Management</button></a>
+                <a href="http://localhost:3000/company/<%= dbUser.id %>/edit" id="dashProfileId"><button id="dashProfile">Edit Company Details</button></a>
             </div>
         </div>
         <div class="dash-outer-right">
             <div class="dash-right-nav">
                 <button type="button" class="a-btn-class" data-type="jobs">Create Jobs</button>
-                <button type="button" class="a-btn-class" data-type="applications">Applications</button>
                 <button type="button" class="a-btn-class" data-type="postedJobs">Jobs You Posted</button>
+                <button type="button" class="a-btn-class" data-type="applications">Applications</button>
                 <button type="button" class="a-btn-class" data-type="notifications">Notifications</button>
                 <button type="button" class="a-btn-class" data-type="notices">Admin Notices</button>
             </div>
@@ -38,6 +38,6 @@
             </div>
         </div>
     </div>
-    <script src="/js/companyDash.js"></script>
+    <script src="/js/dashboard.js"></script>
 </body>
 </html>

@@ -11,6 +11,7 @@ const jobSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Company"
     },
+    companyName:String,
     applicants:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Application"

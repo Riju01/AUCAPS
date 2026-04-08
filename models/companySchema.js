@@ -45,7 +45,11 @@ const companySchema = new Schema({
 
     country:String,
 
-    accType:String
+    accType:String,
+    job:[{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Job"
+        }],
 });
 
 const Company = mongoose.model("Company", companySchema);

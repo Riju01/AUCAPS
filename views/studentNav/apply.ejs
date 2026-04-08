@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> See Details And Apply </title> </head>
+    <link rel="stylesheet" href="/css/style.css">
+<body>
+    <div class="job-detail">
+        <h2 class="table-title">Job Details</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Information</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Title</td>
+                    <td><%= jobData.title %></td>
+                </tr>
+                <tr>
+                    <td>Description</td>
+                    <td><%= jobData.description %></td>
+                </tr>
+                <tr>
+                    <td>Salary</td>
+                    <td><%= jobData.salary %></td>
+                </tr>
+                <tr>
+                    <td>CGPA Required</td>
+                    <td><%= jobData.reqCgpa %></td>
+                </tr>
+                <tr>
+                    <td>Deadline</td>
+                    <td><%= jobData.deadline.toISOString().split("T")[0] %></td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <% if (isApplied) { %>
+            <!-- Already Applied -->
+            <button type="button" class="a-btn-class applied-btn" disabled>
+                Applied ✅
+            </button>
+        <% } else { %>
+            <!--  Can Apply -->
+            <button type="button"
+                    class="a-btn-class"
+                    data-type="applyJob"
+                    data-jobid="<%= jobData._id %>">
+                Apply
+            </button>
+        <% } %>
+    </div>
+    <script src="/js/dashboard.js"></script>
+</body>
+</html>

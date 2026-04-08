@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Applicants</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <h2 class="test-h2-class">Following is the List of People Applied:</h2>
+    <div class="job-template">
+        <% applicants.forEach(app => { %>
+            <div class="individual-template">
+
+                <h3>Job Title: <%= app.job.title %></h3>
+                <h3>Applicant: <%= app.name %></h3>
+                <h4>CGPA: <%= app.cgpa %></h4>
+                <!-- <h4>Salary: <%= app.job.salary %></h4> -->
+                <h4>CGPA Required: <%= app.job.reqCgpa %></h4>
+                <h4>
+                    Deadline:
+                    <%= new Date(app.job.deadline).toLocaleDateString() %>
+                </h4>
+                <!-- Extra Info -->
+                <p>Resume: 
+                    <a href="<%= app.resume %>" target="_blank">View Resume</a>
+                </p>
+                <p>Cover Letter: <%= app.coverLetter %></p>
+                <!-- Actions -->
+                <div class="dash-right-nav">
+                    <form method="POST" action="/company/updateStatus">
+                        <div clas="dash-right-nav">
+                            <input type="hidden" name="appId" value="<%= app._id %>">
+                            <button type="submit" name="status" value="shortlisted" class="a-btn-class" id="shortList">Shortlist</button>
+                            <button type="submit" name="status" value="rejected" class="a-btn-class" id="shortReject">Reject</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+
+    <script src="/js/dashboard.js"></script>
+</body>
+</html>

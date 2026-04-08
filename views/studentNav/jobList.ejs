@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jobs Posted By You</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <h2 class="test-h2-class"> Follwoing is the List of all jobs: </h2>
+    <div class="job-template">
+    <% jobs.forEach(job => { %>
+        <div class="individual-template ">
+            <h3>Title: <%= job.title %> </h3>
+            <h4>Company: <%= job.companyName %> </h4>
+            <h4>Salary: <%= job.salary %> </h4>
+            <h4>Cgpa Required: <%= job.reqCgpa %> </h4>
+            <h4>Deadline: <%= job.deadline.toISOString().split("T")[0] %></h4>
+            <a href="http://localhost:3000/job/<%= job.id %>/details" id="dashProfileId"><button id="dashProfile" data-type="jobDetails" data-jobid="<%= job._id %>">View Details & Apply</button></a>
+        </div>
+    <% }) %>
+    </div>
+<script src="/js/dashboard.js"></script>
+</body>
+</html>

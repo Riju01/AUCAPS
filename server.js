@@ -10,6 +10,7 @@ const Student=require("./models/studentSchema.js");
 const Company=require("./models/companySchema.js");
 const Admin=require("./models/adminSchema.js");
 const Job=require("./models/jobSchema.js");
+const Application=require("./models/applicationSchema.js")
 
 main().then(()=>{
     console.log("Connected to DB");
@@ -40,7 +41,7 @@ app.set("views", path.join(__dirname, "views"));
 
 //Home Page
 app.get("/",(req,res)=>{
-    res.render("home.ejs");
+    res.render("landPage/home.ejs");
 })
 
 
@@ -204,15 +205,17 @@ app.post("/company/:id/edit", async (req, res) => {
 //Job Creation
 app.get("/company/:id/data/:type",async(req,res)=>{
     const type=req.params.type;
-    const company = await Company.findById(req.params.id);
+    const company = await Company.findById(req.params.id).populate("job");
+    const jobs = company.job;
     if(type === "jobs"){
         return res.render("companyNav/createJob.ejs",{dbUser:company});
     }
     if(type === "applications"){
-        return res.render("companyNav/application.ejs",{dbUser:company})
+        return res.render("companyNav/application.ejs",{jobs})
     }
     if(type === "postedJobs"){
-        return res.render("companyNav/postedJob.ejs",{dbUser:company})
+        
+        return res.render("companyNav/postedJob.ejs",{jobs})
     }
     if(type === "notifications"){
         return res.render("companyNav/notification.ejs",{dbUser:company})
@@ -220,7 +223,179 @@ app.get("/company/:id/data/:type",async(req,res)=>{
     if(type === "notices"){
         return res.render("companyNav/notice.ejs",{dbUser:company})
     }
+    if(type === "jobDetails"){
+        const job = await Job.findById(req.query.jobId)
+        return res.render("companyNav/jobDetails.ejs",{jobData:job})
+    }
+    if(type === "jobApplicants"){
+        const jobId = req.query.jobId;
+        const applicants = await Application.find({ job: jobId }).populate("job");
+        return res.render("companyNav/applicantList.ejs", { applicants });
+    }
 })
+app.post("/company/:id/createJob", async(req,res)=>{
+    const companyId=req.params.id
+    const company = await Company.findById(companyId);
+    try{
+        const newJob = new Job({
+            ...req.body,
+            company:companyId,
+            companyName:company.name
+        });
+        await newJob.save();
+        await Company.findByIdAndUpdate(
+            req.params.id,
+            { $push: { job: newJob._id } }
+        );
+        res.redirect(`/company/${req.params.id}`);
+    }catch(err){
+        console.log(err);
+        res.send("Error to create job")
+    }
+})
+
+
+//Job Application
+app.get("/student/:id/data/:type", async (req, res) => {
+    try {
+        const { id, type } = req.params;
+        const student = await Student.findById(id);
+
+        if (!student) {
+            return res.status(404).send("Student not found");
+        }
+        if (type === "feed") {
+            return res.render("studentNav/feed.ejs", { student });
+        }
+        if (type === "jobOpenning") {
+            const allJobs = await Job.find().populate("company");
+            return res.render("studentNav/jobList.ejs", {
+                jobs: allJobs,
+                student
+            });
+        }
+        if (type === "jobApplied") {
+            const populatedStudent = await Student.findById(id)
+                .populate({
+                    path: "appliedJob",
+                    populate: {
+                        path: "company" 
+                    }
+                });
+
+            return res.render("studentNav/jobsApplied.ejs", {
+                jobs: populatedStudent.appliedJob
+            });
+        }
+        if (type === "checkCompany") {
+            return res.render("studentNav/companyList.ejs", { student });
+        }
+        if (type === "notification") {
+            return res.render("studentNav/notifications.ejs", { student });
+        }
+
+        // ✅ JOB DETAILS (VIEW ONLY)
+        if (type === "jobDetails") {
+            const jobId = req.query.jobId;
+
+            if (!jobId) {
+                return res.status(400).send("Job ID is required");
+            }
+
+            const job = await Job.findById(jobId).populate("company");
+
+            if (!job) {
+                return res.status(404).send("Job not found");
+            }
+
+            // ✅ CHECK IF ALREADY APPLIED
+            const existingApplication = await Application.findOne({
+                student: id,
+                job: jobId
+            });
+
+            const isApplied = !!existingApplication; // true or false
+
+            return res.render("studentNav/apply.ejs", {
+                jobData: job,
+                student,
+                isApplied
+            });
+        }
+
+        // ✅ STEP 1: SHOW APPLICATION FORM (IMPORTANT FLOW FIX)
+        if (type === "applyJob") {
+            const jobId = req.query.jobId;
+            const job = await Job.findById(jobId);
+            return res.render("studentNav/applyForm.ejs", {
+                job,
+                student
+            });
+        }
+                return res.status(400).send("Invalid type");
+            } catch (err) {
+                console.error(err);
+                return res.status(500).send("Server Error");
+            }
+        });
+
+
+//Application Data
+app.post("/student/:id/apply", async (req, res) => {
+    try {
+        const studentId = req.params.id;
+        const { jobId, name, cgpa, resume, coverLetter } = req.body;
+
+        if (!jobId) {
+            return res.status(400).send("Job ID missing");
+        }
+
+        const existing = await Application.findOne({
+            student: studentId,
+            job: jobId
+        });
+
+        if (existing) {
+            return res.send("<h3 style='color:red;'>Already Applied ❌</h3>");
+        }
+
+        const job = await Job.findById(jobId);
+        if (!job) {
+            return res.status(404).send("Job not found");
+        }
+
+        // ✅ SAVE APPLICATION FIRST
+        const application = new Application({
+            student: studentId,
+            job: jobId,
+            company: job.company,
+            name,
+            cgpa,
+            resume,
+            coverLetter
+        });
+
+        await application.save();
+
+        // ✅ THEN UPDATE STUDENT
+        await Student.findByIdAndUpdate(studentId, {
+            $addToSet: { appliedJob: jobId } 
+        });
+
+        res.send(`
+            <div class="job-detail">
+                <h2 style="color:green;">Application Submitted ✅</h2>
+                <p>Your application has been successfully submitted.</p>
+                <button class="a-btn-class" data-type="jobOpenning">Go Back</button>
+            </div>
+        `);
+
+    } catch (err) {
+        console.error("ERROR:", err);
+        res.status(500).send("Server Error");
+    }
+});
+
 
 
 

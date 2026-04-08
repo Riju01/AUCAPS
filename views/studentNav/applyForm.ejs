@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apply Form</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="background-image">
+
+    <div class="edit-log-wrapper">
+        <form id="applyForm" method="POST" action="/student/<%= student._id %>/apply">
+            <div class="edit-div">
+                <h2>Apply for <%= job.title %></h2>
+                <input type="hidden" name="jobId" value="<%= job._id %>">
+                <label class="edit-div-label">Full Name</label><br>
+                <input type="text" name="name" placeholder="Enter your full name" class="edit-div-inp" required><br>
+                <label class="edit-div-label">CGPA</label><br>
+                <input type="number" step="0.01" name="cgpa" placeholder="Enter your CGPA" class="edit-div-inp" required><br>
+                <label class="edit-div-label">Resume Link</label><br>
+                <input type="text" name="resume" placeholder="Paste Google Drive link" class="edit-div-inp" required><br>
+                <label class="edit-div-label">Cover Letter</label><br>
+                <textarea name="coverLetter" placeholder="Write your cover letter..." class="edit-div-inp jobTextarea"></textarea><br>
+                <button type="submit" class="btn-class">Submit Application</button>
+                <h3>Want to go back?</h3>
+                <a href="/student/<%= student._id %>">
+                    <button type="button" class="btn-class">Cancel</button>
+                </a>
+            </div>
+        </form>
+    </div>
+    <script src="/js/dashboard.js"></script>
+</body>
+</html>

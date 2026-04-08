@@ -45,6 +45,14 @@ const studentSchema = new Schema({
         required:true
     },
 
+    skill:[{
+        tyep:String,
+    }],
+
+    appliedJob:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Job"
+    }],
     address:String,
     country:String,
     accType:String

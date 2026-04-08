@@ -10,7 +10,7 @@
     <div class="dash-main">
         <div class="dash-outer-left">
             <div class="dash-left-nav">
-                <h2>Dashboard</h2>
+                <h2 class="dash-head1">Dashboard</h2>
             </div>
             <div class="img-container">
                 <img src="/images/man.png" class="dash-img">
@@ -23,21 +23,22 @@
                 Address: <%= dbUser.address %>
             </div>
             <div class="dash-inner-left">
-                <a href="http://localhost:3000/student/<%= dbUser.id %>/edit" id="dashProfileId"><button id="dashProfile">Profile Management</button></a>
+                <a href="http://localhost:3000/student/<%= dbUser.id %>/edit" id="dashProfileId"><button id="dashProfile"> Edit Profile Details </button></a>
             </div>
         </div>
         <div class="dash-outer-right">
             <div class="dash-right-nav">
-                <a href="/student/<%= dbUser.id %>/news"><button type="button" class="a-btn-class">News Feed</button></a>
-                <a href="/jobs"><button type="button" class="a-btn-class">Job Openings</button></a>
-                <a href="/companies"><button type="button" class="a-btn-class">Check Companies</button></a>
-                <a href="/student/<%= dbUser.id %>/notifications"><button type="button" class="a-btn-class">Notifications</button></a>
-                <a href="/student/<%= dbUser.id %>/applications"><button type="button" class="a-btn-class">Jobs Applied</button></a>
+                <button type="button" class="a-btn-class" data-type="feed">News Feed</button>
+                <button type="button" class="a-btn-class" data-type="jobOpenning">Job Openings</button>
+                <button type="button" class="a-btn-class" data-type="jobApplied">Jobs Applied</button>
+                <button type="button" class="a-btn-class" data-type="checkCompany">Check Companies</button>
+                <button type="button" class="a-btn-class" data-type="notification">Notifications</button>
             </div>
-            <div class="dash-inner-right">
+            <div class="dash-inner-right" id="content-area">
                 <h3 style="color: black;">Timeline posts are here</h3>
             </div>
         </div>
     </div>
+    <script src="/js/dashboard.js"></script>
 </body>
 </html>

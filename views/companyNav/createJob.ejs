@@ -8,7 +8,7 @@
 </head>
 <body class="background-image">
     <div class="edit-log-wrapper">
-        <form method="POST" action="http://localhost:3000/company/create-job">
+        <form method="POST" action="/company/<%= dbUser.id %>/createJob">
             <div class="edit-div">
                 <h2>Create Job Circulation</h2>
                 <% if (typeof error !== 'undefined') { %>
@@ -17,16 +17,16 @@
                 <label for="title" class="edit-div-label">Job Title</label><br>
                 <input type="text" id="title" name="title" placeholder="Enter Your Job Title" class="edit-div-inp" required><br>
                 <label for="reqCgpa" class="edit-div-label">CGPA Required</label><br>
-                <input type="Number" id="reqCgpa" name="reqCgpa" placeholder="Enter Minium CGPA Required" class="edit-div-inp"><br>   
+                <input type="Number" id="reqCgpa" name="reqCgpa" placeholder="Enter Minium CGPA Required" class="edit-div-inp" step="0.01"><br>   
                 <label for="salary" class="edit-div-label">Salary</label><br>
                 <input type="Number" id="salary" name="salary" placeholder="Enter Salary/Month" class="edit-div-inp"><br>
                 <label for="deadline" class="edit-div-label">Deadline</label><br>
                 <input type="date" id="deadline" name="deadline" placeholder="Enter Last Date To Apply" class="edit-div-inp"><br>
-                <label for="description" class="edit-div-label">Short Description</label><br>
+                <label for="description" class="edit-div-label">Description</label><br>
                 <textarea id="description" name="description" placeholder="Enter Job Description" class="edit-div-inp jobTextarea"></textarea><br>
-                <label for="type" class="edit-div-label">Company Type</label><br>
+                <label for="type" class="edit-div-label">Job Type</label><br>
                 <select id="type" name="type">
-                    <option value="">Select Account Type</option>
+                    <option value="">Select Job Type</option>
                     <option value="chemical"> Chemicals </option>
                     <option value="it"> IT </option>
                     <option value="consultancy"> Consultancy</option>

@@ -1,4 +1,4 @@
-# AUCAPS - AndhrA University Campus Placement System
+# AUCAPS - AndhrA University Campus Placement Automation System
 
 ## Features
 - Company dashboard

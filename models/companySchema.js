@@ -50,6 +50,10 @@ const companySchema = new Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: "Job"
         }],
+    isVerified: {
+        type: Boolean,
+        default: false
+    }
 });
 
 const Company = mongoose.model("Company", companySchema);

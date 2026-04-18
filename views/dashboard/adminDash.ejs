@@ -7,34 +7,52 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+    <div class="loginHeader">
+        <a href="http://localhost:3000/admin/<%= dbUser.id %>"><img src="/images/logo.png"></a>
+    </div>
+
     <div class="dash-main">
         <div class="dash-outer-left">
             <div class="dash-left-nav">
                 <h2 class="dash-head1">Dashboard</h2>
             </div>
+
             <div class="img-container">
-                <img src="/images/man.png" class="dash-img">
+                <img src="/images/admin.png" class="dash-img">
             </div>
-            <div class="profileDetails">
+            <div class="profileDetails admin-dashboard">
                 <span><h3><%= dbUser.name %></h3></span>
                 <h3>@Andhra University Placement Cell</h3>
-            </div>
-            <div class="dash-inner-left">
-                <a href="http://localhost:3000/admin/<%= dbUser.id %>/edit" id="dashProfileId"><button id="dashProfile">Edit Admin Profile</button></a>
+                <h4>This account operates and manages the whole process of On Campus Placement</h4>
             </div>
         </div>
         <div class="dash-outer-right">
             <div class="dash-right-nav">
-                <a href="#"><button type="button" class="a-btn-class">Company Lists</button></a>
-                <a href="#"><button type="button" class="a-btn-class">Student Lists</button></a>
-                <a href="#"><button type="button" class="a-btn-class">Job Lists</button></a>
-                <a href="#"><button type="button" class="a-btn-class">Verify Accounts</button></a>
-                <a href="#"><button type="button" class="a-btn-class">Notice Board</button></a>
+                <button type="button" class="a-btn-class" data-type="companyList">Company Lists</button>
+                <button type="button" class="a-btn-class" data-type="studentList">Student Lists</button>
+                <button type="button" class="a-btn-class" data-type="jobList">Job Lists</button>
+                <button type="button" class="a-btn-class" data-type="verifyStudent">Verify Student</button>
+                <button type="button" class="a-btn-class" data-type="verifyCompany">Verify Company</button>
+                <button type="button" class="a-btn-class" data-type="noticeBoard">Notice Board</button>
             </div>
-            <div class="dash-inner-right">
-                <h3 style="color: black;">Timeline posts are here</h3>
+            <div class="dash-inner-right" id="content-area">
+                <div class="content-div">
+                    <canvas id="statsChart"
+                        data-students="<%= students.length %>"
+                        data-companies="<%= companies.length %>"
+                        data-jobs="<%= jobs.length %>">
+                    </canvas>
+                </div>
+                <div class="content-div">
+                    <p>In Process</p>
+                </div>
+                <div class="content-div">
+                    <p>In Process</p>
+                </div>
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/js/dashboard.js"></script>
 </body>
 </html>

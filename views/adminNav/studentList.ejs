@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List of All Students</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <h2 class="test-h2-class"> Following is the List all Students: </h2>
+    <div class="job-template">
+        <% students.forEach(student => { %>
+            <div class="individual-template student-card">
+                <h3>Name: <%= student.name %> </h3>
+                <h4>Registration: <%= student.registration %> </h4>
+                <h4>Department: <%= student.department %></h4>
+                <h4>Email: <%= student.email %> </h4>
+                <h4>Address: <%= student.address %> </h4>
+                <!-- <h4>Skills: <%= student.skills %> </h4> -->
+            </div>
+        <% }) %>
+    </div>
+    <script src="/js/dashboard.js"></script>
+</body>
+</html>

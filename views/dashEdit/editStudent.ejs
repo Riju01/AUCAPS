@@ -34,7 +34,38 @@
                     <option value="ce"> Chemical Engineering(CE) </option>
                     <option value="geo"> Geo Engineering(GEO) </option>
                 </select><br>
-                
+                <label for="skills" class="edit-div-label">Required Skills</label>
+                <!-- Programming Languages -->
+                <h4>Programming Languages:</h4>
+                <input type="checkbox" name="skills" value="Java"> Java
+                <input type="checkbox" name="skills" value="Python"> Python
+                <input type="checkbox" name="skills" value="C++"> C++
+                <input type="checkbox" name="skills" value="C"> C
+                <input type="checkbox" name="skills" value="JavaScript"> JavaScript
+                <input type="checkbox" name="skills" value="TypeScript"> TypeScript
+                <input type="checkbox" name="skills" value="Go"> Go
+                <input type="checkbox" name="skills" value="Rust"> Rust
+                <input type="checkbox" name="skills" value="PHP"> PHP
+                <br>
+
+                <!-- Web Development -->
+                 <h4>Web Development:</h4>
+                <input type="checkbox" name="skills" value="HTML"> HTML
+                <input type="checkbox" name="skills" value="CSS"> CSS
+                <input type="checkbox" name="skills" value="React"> React
+                <input type="checkbox" name="skills" value="Angular"> Angular
+                <input type="checkbox" name="skills" value="Vue"> Vue
+                <input type="checkbox" name="skills" value="Node.js"> Node.js
+                <input type="checkbox" name="skills" value="Express"> Express
+                <br><br>
+
+                <!-- Database -->
+                 <h4>Database:</h4>
+                <input type="checkbox" name="skills" value="MongoDB"> MongoDB
+                <input type="checkbox" name="skills" value="MySQL"> MySQL
+                <input type="checkbox" name="skills" value="PostgreSQL"> PostgreSQL
+                <input type="checkbox" name="skills" value="SQLite"> SQLite
+                <br><br>
                 <button type="submit" class="btn-class">Edit</button>
                 <h3>Don't want to edit?</h3>
                 <a href="http://localhost:3000/student/<%= dbUser.id %>"><button type="button" class="btn-class">Go Back</button></a>

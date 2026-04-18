@@ -21,8 +21,16 @@
                     <td><%= jobData.title %></td>
                 </tr>
                 <tr>
+                    <td>Company</td>
+                    <td><%= jobData.company.name %></td>
+                </tr>
+                <tr>
+                    <td>Total Applications</td>
+                    <td><%= totalApplications %></td>
+                </tr>
+                <tr>
                     <td>Description</td>
-                    <td><%= jobData.description %></td>
+                    <td class="formatted-text"><%= jobData.description %></td>
                 </tr>
                 <tr>
                     <td>Salary</td>
@@ -34,16 +42,14 @@
                 </tr>
                 <tr>
                     <td>Skills Required</td>
-                    <td><%= jobData.skillsReq.join(", ")  %></td>
+                    <td><%= jobData.skillsReq.join(", ") %></td>
                 </tr>
                 <tr>
                     <td>Deadline</td>
-                    <td><%= jobData.deadline.toISOString().split("T")[0] %></td>
+                    <td><%= jobData.deadline? jobData.deadline.toISOString().split("T")[0]: "Not specified" %></td>
                 </tr>
             </tbody>
         </table>
-        <br>
-        <button type="button" class="a-btn-class" id="editJobBtn">Edit Details</button>
     </div>
 </body>
 </html>

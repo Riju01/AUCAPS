@@ -11,6 +11,9 @@ const Company=require("./models/companySchema.js");
 const Admin=require("./models/adminSchema.js");
 const Job=require("./models/jobSchema.js");
 const Application=require("./models/applicationSchema.js")
+const multer = require("multer");
+
+
 
 main().then(()=>{
     console.log("Connected to DB");
@@ -22,6 +25,27 @@ async function main(params) {
     await mongoose.connect(mongo_url);
 }
 
+// storage config
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, "uploads/"); // folder name
+    },
+    filename: function (req, file, cb) {
+        const uniqueName = Date.now() + "-" + file.originalname;
+        cb(null, uniqueName);
+    }
+});
+const upload = multer({
+    storage,
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype === "application/pdf") {
+            cb(null, true);
+        } else {
+            cb(new Error("Only PDF allowed"), false);
+        }
+    }
+});
+
 
 // Middleware
 app.use(express.static(path.join(__dirname, "public")));
@@ -32,7 +56,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }));
-
+app.use("/uploads", express.static("uploads"));
 
 // View Engine Setup
 app.set("view engine", "ejs");
@@ -126,6 +150,9 @@ app.get("/:accType/:id", async (req, res) => {
     }
     let info = req.params;
     let dbUser;
+    students = await Student.find({});
+    companies = await Company.find({});
+    jobs = await Job.find({});
     if(info.accType === "student"){
         dbUser = await Student.findById(info.id);
         if(!dbUser){
@@ -202,7 +229,7 @@ app.post("/company/:id/edit", async (req, res) => {
 });
 
 
-//Job Creation
+//Company Login Management
 app.get("/company/:id/data/:type",async(req,res)=>{
     const type=req.params.type;
     const company = await Company.findById(req.params.id).populate("job");
@@ -229,33 +256,50 @@ app.get("/company/:id/data/:type",async(req,res)=>{
     }
     if(type === "jobApplicants"){
         const jobId = req.query.jobId;
-        const applicants = await Application.find({ job: jobId }).populate("job");
+        const applicants = await Application.find({ job: jobId }).populate("student").populate("job");
         return res.render("companyNav/applicantList.ejs", { applicants });
     }
-})
-app.post("/company/:id/createJob", async(req,res)=>{
-    const companyId=req.params.id
-    const company = await Company.findById(companyId);
-    try{
-        const newJob = new Job({
-            ...req.body,
-            company:companyId,
-            companyName:company.name
-        });
-        await newJob.save();
-        await Company.findByIdAndUpdate(
-            req.params.id,
-            { $push: { job: newJob._id } }
-        );
-        res.redirect(`/company/${req.params.id}`);
-    }catch(err){
-        console.log(err);
-        res.send("Error to create job")
+    if(type === "applicantDetails"){
+        const studentId = req.query.studentId;
+        const jobId = req.query.jobId;
+        const application = await Application.findOne({student: studentId, job: jobId}).populate("student").populate("job");
+        res.render("companyNav/applicantDetails.ejs",{application});
     }
 })
+app.post("/company/:id/createJob", async (req, res) => {
+    const companyId = req.params.id;
+    const company = await Company.findById(companyId);
+    try {
+        let skillsReq = req.body.skillsReq;
+        if (!skillsReq) {
+            skillsReq = [];
+        } else if (!Array.isArray(skillsReq)) {
+            skillsReq = [skillsReq];
+        }
+        const newJob = new Job({
+            title: req.body.title,
+            description: req.body.description,
+            reqCgpa: req.body.reqCgpa,
+            deadline: req.body.deadline,
+            salary: req.body.salary,
+            skillsReq,
+            company: companyId,
+            companyName: company.name
+        });
+        console.log("Final Job:", newJob);
+        await newJob.save();
+        await Company.findByIdAndUpdate(companyId, {
+            $push: { job: newJob._id }
+        });
+        res.redirect(`/company/${companyId}`);
+    } catch (err) {
+        console.log(err);
+        res.send("Error to create job");
+    }
+});
 
 
-//Job Application
+//Student Login Management
 app.get("/student/:id/data/:type", async (req, res) => {
     try {
         const { id, type } = req.params;
@@ -268,27 +312,20 @@ app.get("/student/:id/data/:type", async (req, res) => {
             return res.render("studentNav/feed.ejs", { student });
         }
         if (type === "jobOpenning") {
-            const allJobs = await Job.find().populate("company");
-            return res.render("studentNav/jobList.ejs", {
-                jobs: allJobs,
-                student
+            const Jobs = await Job.find().populate("company");
+            return res.render("studentNav/jobList.ejs", {jobs: Jobs, student
             });
         }
         if (type === "jobApplied") {
-            const populatedStudent = await Student.findById(id)
-                .populate({
-                    path: "appliedJob",
-                    populate: {
-                        path: "company" 
-                    }
-                });
-
-            return res.render("studentNav/jobsApplied.ejs", {
-                jobs: populatedStudent.appliedJob
-            });
+            const populatedStudent = await Student.findById(id).populate({path: "appliedJob",populate: {path: "company" }});
+            if(populatedStudent.appliedJob.length===0){
+                return res.render("studentNav/zeroApplied.ejs")
+            }
+            return res.render("studentNav/jobsApplied.ejs", {jobs: populatedStudent.appliedJob});
         }
         if (type === "checkCompany") {
-            return res.render("studentNav/companyList.ejs", { student });
+            const companies = await Company.find();
+            return res.render("studentNav/companyList.ejs", { companies });
         }
         if (type === "notification") {
             return res.render("studentNav/notifications.ejs", { student });
@@ -297,40 +334,24 @@ app.get("/student/:id/data/:type", async (req, res) => {
         // ✅ JOB DETAILS (VIEW ONLY)
         if (type === "jobDetails") {
             const jobId = req.query.jobId;
-
             if (!jobId) {
                 return res.status(400).send("Job ID is required");
             }
-
             const job = await Job.findById(jobId).populate("company");
-
             if (!job) {
                 return res.status(404).send("Job not found");
             }
 
             // ✅ CHECK IF ALREADY APPLIED
-            const existingApplication = await Application.findOne({
-                student: id,
-                job: jobId
-            });
-
+            const existingApplication = await Application.findOne({student: id, job: jobId});
             const isApplied = !!existingApplication; // true or false
-
-            return res.render("studentNav/apply.ejs", {
-                jobData: job,
-                student,
-                isApplied
-            });
+            return res.render("studentNav/apply.ejs", {jobData: job, student, isApplied});
         }
 
         // ✅ STEP 1: SHOW APPLICATION FORM (IMPORTANT FLOW FIX)
         if (type === "applyJob") {
-            const jobId = req.query.jobId;
-            const job = await Job.findById(jobId);
-            return res.render("studentNav/applyForm.ejs", {
-                job,
-                student
-            });
+            const job = await Job.findById(req.query.jobId);
+            return res.render("studentNav/applyForm.ejs", {job,student});
         }
                 return res.status(400).send("Invalid type");
             } catch (err) {
@@ -340,11 +361,16 @@ app.get("/student/:id/data/:type", async (req, res) => {
         });
 
 
-//Application Data
-app.post("/student/:id/apply", async (req, res) => {
+//Application Management
+app.post("/student/:id/apply", upload.single("resume"), async (req, res) => {
     try {
         const studentId = req.params.id;
-        const { jobId, name, cgpa, resume, coverLetter } = req.body;
+        const { jobId, name, cgpa, coverLetter } = req.body;
+
+        if (!req.file) {
+            return res.send("❌ Resume not uploaded");
+        }
+        const resume = "/uploads/" + req.file.filename;
 
         if (!jobId) {
             return res.status(400).send("Job ID missing");
@@ -364,22 +390,26 @@ app.post("/student/:id/apply", async (req, res) => {
             return res.status(404).send("Job not found");
         }
 
-        // ✅ SAVE APPLICATION FIRST
         const application = new Application({
             student: studentId,
             job: jobId,
             company: job.company,
             name,
             cgpa,
-            resume,
+            resume, // ✅ correct path
             coverLetter
         });
 
         await application.save();
 
-        // ✅ THEN UPDATE STUDENT
+        // 🔥 Link to Job
+        await Job.findByIdAndUpdate(jobId, {
+            $push: { applicants: application._id }
+        });
+
+        // 🔥 Update Student
         await Student.findByIdAndUpdate(studentId, {
-            $addToSet: { appliedJob: jobId } 
+            $addToSet: { appliedJob: jobId }
         });
 
         res.send(`
@@ -397,6 +427,90 @@ app.post("/student/:id/apply", async (req, res) => {
 });
 
 
+//Admin Login Management
+app.get("/admin/:id/data/:type", async(req,res)=>{
+    const type = req.params.type;
+    const companies = await Company.find();
+    const students = await Student.find();
+    const jobs = await Job.find();
+    if(type === "companyList"){
+        return res.render("adminNav/companyList.ejs",{companies});
+    }
+    if(type === "studentList"){
+        return res.render("adminNav/studentList.ejs",{students});
+    }
+    if(type === "jobList"){
+        return res.render("adminNav/jobList.ejs",{jobs});
+    }
+    if(type === "verifyStudent"){
+        const students = await Student.find({ isVerified: false });
+        if(students.length === 0){
+            return res.render("adminNav/noAccount.ejs")
+        }
+        return res.render("adminNav/verifyStudent.ejs",{students});
+    }
+
+    if(type === "studentDetailsVerify"){
+        console.log("Admin ID:", req.params.id);
+        console.log("Student ID:", req.query.studentId);
+        const student = await Student.findById(req.query.studentId);
+        console.log("Student found:", student);
+        if(!student){
+            return res.send("Student not found");
+        }
+        return res.render("adminNav/studentdetailsVerfication.ejs",{student});
+    }
+
+    if(type === "verifyCompany"){
+        const companies = await Company.find({ isVerified: false });
+        if(companies.length === 0){
+            return res.render("adminNav/noAccount.ejs")
+        }
+        return res.render("adminNav/verifyCompany.ejs",{companies});
+    }
+
+    if(type === "companyDetailsVerify"){
+        const company = await Company.findById(req.params.id);
+        return res.render("adminNav/companyDetailsVerfication.ejs",{company});
+    }
+
+    if(type === "noticeBoard"){
+        return res.send("List of All notices");
+    }
+
+    if(type === "jobDetails"){
+        const job = await Job.findById(req.query.jobId).populate("company");
+        const totalApplications = await Application.countDocuments({job: req.query.jobId});
+        return res.render("adminNav/jobDetails.ejs",{jobData:job,totalApplications});
+    }
+})
+
+
+// VERIFICATION
+app.post("/admin/verify/:type/:id", async (req, res) => {
+    const { type, id } = req.params;
+
+    try {
+        if (type === "student") {
+            await Student.findByIdAndUpdate(id, { isVerified: true });
+        } 
+        else if (type === "company") {
+            await Company.findByIdAndUpdate(id, { isVerified: true });
+        }
+
+        res.send("Verified successfully");
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error verifying");
+    }
+});
+
+app.post("/company/:id/create-job", async (req, res) => {
+    const company = await Company.findById(req.params.id);
+    if (!company.isVerified) {
+        return res.send("❌ Your company is not verified yet.");
+    }
+});
 
 
 app.listen(port,()=>{

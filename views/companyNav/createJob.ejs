@@ -7,35 +7,84 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body class="background-image">
-    <div class="edit-log-wrapper">
+    <div class="edit-log-wrapper split-log-wrapper">
         <form method="POST" action="/company/<%= dbUser.id %>/createJob">
-            <div class="edit-div">
-                <h2>Create Job Circulation</h2>
-                <% if (typeof error !== 'undefined') { %>
-                <p style="color:red;"><%= error %></p>
-                <% } %>
-                <label for="title" class="edit-div-label">Job Title</label><br>
-                <input type="text" id="title" name="title" placeholder="Enter Your Job Title" class="edit-div-inp" required><br>
-                <label for="reqCgpa" class="edit-div-label">CGPA Required</label><br>
-                <input type="Number" id="reqCgpa" name="reqCgpa" placeholder="Enter Minium CGPA Required" class="edit-div-inp" step="0.01"><br>   
-                <label for="salary" class="edit-div-label">Salary</label><br>
-                <input type="Number" id="salary" name="salary" placeholder="Enter Salary/Month" class="edit-div-inp"><br>
-                <label for="deadline" class="edit-div-label">Deadline</label><br>
-                <input type="date" id="deadline" name="deadline" placeholder="Enter Last Date To Apply" class="edit-div-inp"><br>
-                <label for="description" class="edit-div-label">Description</label><br>
-                <textarea id="description" name="description" placeholder="Enter Job Description" class="edit-div-inp jobTextarea"></textarea><br>
-                <label for="type" class="edit-div-label">Job Type</label><br>
-                <select id="type" name="type">
-                    <option value="">Select Job Type</option>
-                    <option value="chemical"> Chemicals </option>
-                    <option value="it"> IT </option>
-                    <option value="consultancy"> Consultancy</option>
-                    <option value="other"> Others </option>
-                </select><br>
-                <button type="submit" class="btn-class">Create Job</button>
-                <h3>Don't Want To Create Job?</h3>
-                <a href="http://localhost:3000/company/<%= dbUser.id %>"><button type="button" class="btn-class">Cancel Creation</button></a>
-            </div>
+            <div >
+    <h2>Create Job Circulation</h2>
+
+    <% if (typeof error !== 'undefined') { %>
+    <p style="color:red;"><%= error %></p>
+    <% } %>
+
+    <div class="split-container">
+
+        <!-- LEFT SIDE -->
+        <div class="left-spilt-div">
+
+            <label for="title" class="edit-div-label">Job Title</label><br>
+            <input type="text" id="title" name="title" placeholder="Enter Your Job Title" class="edit-div-inp" required><br>
+
+            <label for="reqCgpa" class="edit-div-label">CGPA Required</label><br>
+            <input type="Number" id="reqCgpa" name="reqCgpa" placeholder="Enter Minium CGPA Required" class="edit-div-inp" step="0.01" required><br>   
+
+            <label for="salary" class="edit-div-label">Salary</label><br>
+            <input type="Number" id="salary" name="salary" placeholder="Enter Salary/Month" class="edit-div-inp"><br>
+
+            <label for="deadline" class="edit-div-label">Deadline</label><br>
+            <input type="date" id="deadline" name="deadline" class="edit-div-inp" required><br>
+            <label for="description" class="edit-div-label">Description</label><br>
+            <textarea id="description" name="description" placeholder="Enter Job Description" class="edit-div-inp jobTextarea"></textarea><br><br>
+
+            <label for="type" class="edit-div-label">Job Type</label><br>
+            <select id="type" name="type">
+                <option value="">Select Job Type</option>
+                <option value="chemical"> Chemicals </option>
+                <option value="it"> IT </option>
+                <option value="consultancy"> Consultancy</option>
+                <option value="other"> Others </option>
+            </select><br><br>
+
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div class="right-split-div">
+
+            <label for="skills" class="edit-div-label">Required Skills</label>
+            <h4>Programming Languages:</h4>
+            <input type="checkbox" name="skillsReq" value="Java"> Java
+            <input type="checkbox" name="skillsReq" value="Python"> Python
+            <input type="checkbox" name="skillsReq" value="C++"> C++
+            <input type="checkbox" name="skillsReq" value="JavaScript"> JavaScript
+            <input type="checkbox" name="skillsReq" value="TypeScript"> TypeScript
+
+            <h4>Web Development:</h4>
+            <input type="checkbox" name="skillsReq" value="HTML"> HTML
+            <input type="checkbox" name="skillsReq" value="CSS"> CSS
+            <input type="checkbox" name="skillsReq" value="React"> React
+            <input type="checkbox" name="skillsReq" value="Angular"> Angular
+            <input type="checkbox" name="skillsReq" value="Vue"> Vue
+            <input type="checkbox" name="skillsReq" value="Node.js"> Node.js
+            <input type="checkbox" name="skillsReq" value="Express"> Express
+
+            <h4>Database:</h4>
+            <input type="checkbox" name="skillsReq" value="MongoDB"> MongoDB
+            <input type="checkbox" name="skillsReq" value="MySQL"> MySQL
+            <input type="checkbox" name="skillsReq" value="PostgreSQL"> PostgreSQL
+
+        </div>
+
+    </div>
+
+    <!-- BUTTONS (unchanged, outside split) -->
+    <button type="submit" class="btn-class verificationBtn" data-verified="<%= dbUser.isVerified %>">
+        Create Job
+    </button>
+
+    <h3>Don't Want To Create Job?</h3>
+    <a href="http://localhost:3000/company/<%= dbUser.id %>">
+        <button type="button" class="btn-class">Cancel Creation</button>
+    </a>
+</div>
         </form>
     </div>
     <script src="/js/script.js"></script>

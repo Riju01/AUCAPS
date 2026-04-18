@@ -1,32 +1,55 @@
 const password = document.getElementById("password");
 const confirmPassword = document.getElementById("confirmPassword");
 const message = document.getElementById("message");
+if (password && confirmPassword && message) {
+    let timer;
+    let hideTimer;
+    confirmPassword.addEventListener("keyup", function () {
+        clearTimeout(timer);
+        clearTimeout(hideTimer);
+        timer = setTimeout(function() {
+            if (password.value === confirmPassword.value && password.value !== "") {
 
-let timer;
-let hideTimer;
+                message.textContent = "Passwords match ✔";
+                message.style.color = "green";
 
-confirmPassword.addEventListener("keyup", function () {
+                hideTimer = setTimeout(function() {
+                    message.textContent = "";
+                }, 300);
+            } else {
+                message.textContent = "Passwords do not match ✖";
+                message.style.color = "red";
+            }
+        }, 20);
+    });
+}
 
-    clearTimeout(timer);
-    clearTimeout(hideTimer);
 
-    timer = setTimeout(function() {
+function handleVerificationButtons() {
+    document.querySelectorAll(".verificationBtn").forEach(btn => {
+        const isVerified = btn.dataset.verified === "true";
 
-        if (password.value === confirmPassword.value && password.value !== "") {
-
-            message.textContent = "Passwords match ✔";
-            message.style.color = "green";
-
-            // Hide after 2 seconds
-            hideTimer = setTimeout(function() {
-                message.textContent = "";
-            }, 300);
-
-        } else {
-            message.textContent = "Passwords do not match ✖";
-            message.style.color = "red";
+        if (!isVerified) {
+            btn.disabled = true;
+            btn.innerText = "Verification Required";
+            btn.style.backgroundColor = "#ccc";
+            btn.style.cursor = "not-allowed";
         }
+    });
+}
 
-    }, 20); // wait before checking
+handleVerificationButtons();
 
+
+document.addEventListener("submit", (e) => {
+    const btn = e.target.querySelector(".verificationBtn");
+
+    if (!btn) return;
+
+    const isVerified = btn.dataset.verified === "true";
+
+    if (!isVerified) {
+        e.preventDefault();
+        alert("Your company must be verified to create jobs ❌");
+    }
 });

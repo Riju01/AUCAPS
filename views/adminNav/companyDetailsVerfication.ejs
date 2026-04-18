@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Details</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <h2 class="test-h2-class"> Following is the List all Companies: </h2>
+    <div class="job-template">
+            <div class="individual-template">
+                <h3>Name: <%= company.name %> </h3>
+                <h4>Type: <%= company.type %> </h4>
+                <h4>Address: <%= company.address %> </h4>
+                <!-- <% if(company.isVerified){ %>
+                    <p style="color:green;">Verified ✅</p>
+                <% } else { %>
+                    <p style="color:red;">Not Verified ❌</p>
+                <% } %> -->
+                <% if(!company.isVerified){ %>
+                    <button class="dashProfileCss" id="verifyStuCom" data-id="<%= company._id %>" data-type="company"> Verify Company </button>
+                <% } %>
+            </div>
+    </div>
+    <script src="/js/dashboard.js"></script>
+</body>
+</html>

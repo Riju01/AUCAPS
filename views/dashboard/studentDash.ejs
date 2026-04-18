@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Dashboard</title>
+    <title>Student Dashboard</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+    <div class="loginHeader">
+        <a href="http://localhost:3000/student/<%= dbUser.id %>"><img src="/images/logo.png"></a>
+    </div>
     <div class="dash-main">
         <div class="dash-outer-left">
             <div class="dash-left-nav">
@@ -15,15 +18,17 @@
             <div class="img-container">
                 <img src="/images/man.png" class="dash-img">
             </div>
-            <div class="profileDetails">
-                <span><h3><%= dbUser.name %></h3></span>
+            <div class="profileDetails student-dashboard">
+                <span><h3 class="name-with-badge"><%= dbUser.name %>
+                    <% if(dbUser.isVerified){ %><span class="verified-check">✔</span>
+                <% } %></h3></span>
                 Registration: <%= dbUser.registration %><br>
                 Cgpa: <%= dbUser.cgpa %><br>
                 Department: <%= dbUser.department %><br>
-                Address: <%= dbUser.address %>
+                Address: <%= dbUser.address %><br>
             </div>
             <div class="dash-inner-left">
-                <a href="http://localhost:3000/student/<%= dbUser.id %>/edit" id="dashProfileId"><button id="dashProfile"> Edit Profile Details </button></a>
+                <a href="http://localhost:3000/student/<%= dbUser.id %>/edit" id="dashProfileId"><button id="dashProfile" class="dashProfileCss"> Edit Profile Details </button></a>
             </div>
         </div>
         <div class="dash-outer-right">
@@ -35,10 +40,23 @@
                 <button type="button" class="a-btn-class" data-type="notification">Notifications</button>
             </div>
             <div class="dash-inner-right" id="content-area">
-                <h3 style="color: black;">Timeline posts are here</h3>
+                <div class="content-div">
+                    <canvas id="statsChart"
+                        data-students="<%= students.length %>"
+                        data-companies="<%= companies.length %>"
+                        data-jobs="<%= jobs.length %>">
+                    </canvas>
+                </div>
+                <div class="content-div">
+                    <p>In Process</p>
+                </div>
+                <div class="content-div">
+                    <p>In Process</p>
+                </div>
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="/js/dashboard.js"></script>
 </body>
 </html>

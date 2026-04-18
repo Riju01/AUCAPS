@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Details of the Student</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <h2 class="test-h2-class"> Following is the details of the Student: </h2>
+    <div class="job-template">
+            <div class="individual-template">
+                <h3>Name: <%= student.name %> </h3>
+                <h4>Registration: <%= student.registration %> </h4>
+                <h4>Department: <%= student.department %></h4>
+                <h4>Address: <%= student.address %> </h4>
+
+                <!-- <% if(student.isVerified){ %>
+                    <p style="color:green;">Verified ✅</p>
+                <% } else { %>
+                    <p style="color:red;">Not Verified ❌</p>
+                <% } %> -->
+                <% if(!student.isVerified){ %>
+                    <button class="dashProfileCss" id="verifyStuCom" data-studentid="<%= student._id %>" data-type="student"> Verify Student </button>
+                <% } %>
+            </div>
+    </div>
+    <script src="/js/dashboard.js"></script>
+</body>
+</html>

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <h2 class="test-h2-class"> Follwoing is the List of all jobs: </h2>
+    <h2 class="test-h2-class"> Following is the List of all jobs: </h2>
     <div class="job-template">
     <% jobs.forEach(job => { %>
         <div class="individual-template job-card">
@@ -15,11 +15,11 @@
             <h4>Company: <%= job.companyName %> </h4>
             <h4>Salary: <%= job.salary %> </h4>
             <h4>Cgpa Required: <%= job.reqCgpa %> </h4>
-            <h4>Deadline: <%= job.deadline? job.deadline.toISOString().split("T")[0]: "Not specified" %> </h4>
-            <button class="dashProfileCss" id="dashProfile" data-type="jobDetails" data-jobid="<%= job._id %>">View Details & Apply</button>
+            <h4>Deadline: <%= job.deadline? job.deadline.toISOString().split("T")[0]: "Not specified" %></h4>
+            <button class="dashProfileCss" id="dashProfile" data-type="jobDetails" data-jobid="<%= job._id %>">View Details</button>
         </div>
     <% }) %>
     </div>
-<script src="/js/dashboard.js"></script>
+    <script src="/js/dashboard.js"></script>
 </body>
 </html>

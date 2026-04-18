@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Applicant Details </title> </head>
+    <link rel="stylesheet" href="/css/style.css">
+<body>
+    <div class="job-detail">
+        <h2 class="table-title">Applicant Details</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Information</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Applicant Name</td>
+                    <td><%= application.student.name %></td>
+                </tr>
+                <tr>
+                    <td>Applicant Reg.</td>
+                    <td><%= application.student.registration %></td>
+                </tr>
+                <tr>
+                    <td>Applicant Email</td>
+                    <td><%= application.student.email %></td>
+                </tr>
+                <tr>
+                    <td>Required Skills</td>
+                    <td><%= application.job.skillsReq %></td>
+                </tr>
+                <tr>
+                    <td>Applicant's Skills</td>
+                    <td><%= application.student.skills.join(", ") %></td>
+                </tr>
+                <tr>
+                    <td>Required CGPA</td>
+                    <td><%= application.job.reqCgpa %></td>
+                </tr>
+                <tr>
+                    <td>Applicant's CGPA</td>
+                    <td><%= application.student.cgpa %></td>
+                </tr>
+                <tr>
+                    <td>Applicant's Department</td>
+                    <td><%= application.student.department %></td>
+                </tr>
+                <tr>
+                    <td>Applicant's Resume</td>
+                    <td><a href="<%= application.resume %>" target="_blank" class="resume-class" type="button">View Resume</a></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div class="dash-right-nav">
+                            <button class="a-btn-class">Shortlist</button>
+                            <button class="a-btn-class">Reject</button>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+        </table>
+    </div>
+</body>
+</html>

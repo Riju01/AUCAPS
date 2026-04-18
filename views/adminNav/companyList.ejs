@@ -4,16 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>List of All Companies</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <h2 class="test-h2-class"> Follwoing is the List all Companies: </h2>
+    <h2 class="test-h2-class"> Following is the List all Companies: </h2>
     <div class="job-template">
         <% companies.forEach(company => { %>
             <div class="individual-template company-card">
                 <h3>Name: <%= company.name %> </h3>
                 <h4>Type: <%= company.type %> </h4>
-                 <h4>Email: <%= company.email %> </h4>
                 <h4>Address: <%= company.address %> </h4>
+                <h4>Email: <%= company.email %> </h4>
             </div>
         <% }) %>
     </div>

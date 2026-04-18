@@ -45,9 +45,7 @@ const studentSchema = new Schema({
         required:true
     },
 
-    skill:[{
-        tyep:String,
-    }],
+   skills:[String],
 
     appliedJob:[{
         type: mongoose.Schema.Types.ObjectId,
@@ -55,7 +53,17 @@ const studentSchema = new Schema({
     }],
     address:String,
     country:String,
-    accType:String
+    accType:String,
+    
+    isVerified: {
+        type: Boolean,
+        default: false
+    },
+    gender: {
+        type: String,
+        enum: ["male", "female", "others"],
+        default: "others"
+    }
 });
 
 const Student = mongoose.model("Student", studentSchema);

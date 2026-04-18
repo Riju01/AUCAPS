@@ -10,11 +10,12 @@
     <h2 class="test-h2-class"> Follwoing is the List if jobs you Applied: </h2>
     <div class="job-template">
         <% jobs.forEach(job => { %>
-            <div class="individual-template">
+            <div class="individual-template job-card">
                 <h3>Title: <%= job.title %> </h3>
+                <h4>Company:<%= job.company.name %></h4>
                 <h4>Salary: <%= job.salary %> </h4>
                 <h4>Cgpa Required: <%= job.reqCgpa %> </h4>
-                <h4>Deadline: <%= job.deadline.toISOString().split("T")[0] %></h4>
+                <h4>Deadline: <%= job.deadline? job.deadline.toISOString().split("T")[0]: "Not specified" %> </h4>
                 <div class="dash-right-nav">
                     <button type="button" class="a-btn-class" data-type="jobDetails" data-jobid="<%= job._id %>">See Details</button>
                 </div>

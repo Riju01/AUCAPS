@@ -21,8 +21,12 @@
                     <td><%= jobData.title %></td>
                 </tr>
                 <tr>
+                    <td>Company</td>
+                    <td><%= jobData.company.name %></td>
+                </tr>
+                <tr>
                     <td>Description</td>
-                    <td><%= jobData.description %></td>
+                    <td class="formatted-text"><%= jobData.description %></td>
                 </tr>
                 <tr>
                     <td>Salary</td>
@@ -33,23 +37,36 @@
                     <td><%= jobData.reqCgpa %></td>
                 </tr>
                 <tr>
+                    <td>Skills Required</td>
+                    <td><%= jobData.skillsReq.join(", ")  %></td>
+                </tr>
+                <tr>
                     <td>Deadline</td>
                     <td><%= jobData.deadline.toISOString().split("T")[0] %></td>
                 </tr>
             </tbody>
         </table>
         <br>
+
+
+        <!--
+<%= jobData.company.address %> -->
+
+
         <% if (isApplied) { %>
             <!-- Already Applied -->
             <button type="button" class="a-btn-class applied-btn" disabled>
                 Applied ✅
             </button>
+
         <% } else { %>
-            <!--  Can Apply -->
-            <button type="button"
-                    class="a-btn-class"
-                    data-type="applyJob"
-                    data-jobid="<%= jobData._id %>">
+            <!-- Can Apply (handled by JS) -->
+            <button 
+                type="button" 
+                class="a-btn-class verificationBtn"
+                data-type="applyJob"
+                data-jobid="<%= jobData._id %>"
+                data-verified="<%= student.isVerified %>">
                 Apply
             </button>
         <% } %>
